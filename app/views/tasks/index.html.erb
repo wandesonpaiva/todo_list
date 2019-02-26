@@ -1,0 +1,43 @@
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<% if notice %>
+<div class="alert alert-success" role="alert">
+  <p id="notice"><%= notice %></p>
+</div>
+<% end %>
+
+<h1>Tasks</h1>
+
+<hr>
+
+<div class="row">
+  <% @tasks.each do |task| %>
+  <div class="col-sm-4" style="margin-top: 1%">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%= task.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted">Due date: <%= task.due_date %></h6>
+        <p class="card-text"><%= task.description %></p>
+        <p><%= check_box_tag 'done', task.id , task.done, :class => "task-check" %> Done</p>
+        <p><%= link_to 'Edit', edit_task_path(task) %>
+        | <%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+
+<hr>
+<%= link_to 'New Task', new_task_path, class: 'btn btn-success' %>
+
+<script type="text/javascript" >
+
+    $(".task-check").bind('change', function(){
+
+        var bool = this.checked ? 1 : 0;
+        $.ajax({
+            url: '/change_status/' + this.value,
+            type: 'GET'
+        });
+    });
+</script>

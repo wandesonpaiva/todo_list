@@ -1,0 +1,22 @@
+
+<%= simple_form_for(@task) do |f| %>
+  <% if f.error_notification %>
+  <div class="alert alert-danger" role="alert">
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  </div>
+  <% end %>
+
+  <div class="form-inputs">
+    <div class="form-group">
+      <%= f.input :title, label_html: { :class => "form-text"} %>
+      <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+    </div>
+    <%= f.input :description %>
+    <%= f.input :due_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
